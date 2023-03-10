@@ -28,10 +28,21 @@ class _JokeScreenState extends State<JokeScreen> {
                   image: AssetImage('assets/images/logo.jpg'),
                   fit: BoxFit.cover)),
         ),
-        actions: const [
-          CircleAvatar(
-            radius: 45,
-            backgroundImage: AssetImage('assets/images/avt.jpg'),
+        actions: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              textStyle('Handicrafted by', 14, Colors.grey,false),
+              textStyle('Jim HLS', 14, Colors.black,false),
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.only(left: width * 0.025),
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage('assets/images/avt.jpg'),
+            ),
           ),
         ],
       ),
@@ -45,13 +56,13 @@ class _JokeScreenState extends State<JokeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   textStyle(
-                      'A joke a day keeps the doctor away', 20, Colors.white),
+                      'A joke a day keeps the doctor away', 20, Colors.white,false),
                   Padding(
                     padding: EdgeInsets.only(top: height * 0.04),
                     child: textStyle(
                         'if you joke wrong way, your teeth have to pay. (Serious)',
                         14,
-                        Colors.white),
+                        Colors.white,false),
                   ),
                 ],
               )),
@@ -60,32 +71,46 @@ class _JokeScreenState extends State<JokeScreen> {
             child: textStyle(
                 'A child asked his father, "How were people born?" So his father said, "Adam and Eve made babies, then their babies became adults and made babies, and so on."The child then went to his mother, asked her the same question and she told him, "We were monkeys then we evolved to become like we are now." The child ran back to his father and said, "You lied to me!" His father replied, "No, your mom was talking about her side of the family."',
                 14,
-                Colors.grey),
+                Colors.grey,false),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               button('This is Funny!', true, width, height),
               button('This is not Funny!', false, width, height)
             ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: height * 0.03),
-            decoration: const BoxDecoration(
-                border: Border.symmetric(
-                    horizontal: BorderSide(
-              color: Colors.black,
-              width: 1.0,
-            ))),
-            child: Column(
-              children: [
-                textStyle(
-                    "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.",14,Colors.grey),
-              ],
-            ),
-          ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical:height*0.02,horizontal: height*0.03),
+          decoration: const BoxDecoration(
+              border: Border.symmetric(
+            horizontal: BorderSide(
+              color: Colors.grey,
+              width: 1.0,
+            ),
+          )),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              textStyle(
+                  "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.",
+                  14,
+                  Colors.grey,true),
+              Container(
+                padding: EdgeInsets.only(top: height*0.01),
+                child: textStyle(
+                    'Copyright 2021 HLS',
+                    14,
+                    Colors.black,false),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -102,13 +127,14 @@ class _JokeScreenState extends State<JokeScreen> {
     );
   }
 
-  Widget textStyle(text, double fontSize, color) {
+  Widget textStyle(text, double fontSize, color, isAlignCenter) {
     return Text(
       text,
       style: Theme.of(context)
           .textTheme
           .subtitle1
-          ?.copyWith(color: color, fontSize: fontSize),
+          ?.copyWith(color: color, fontSize: fontSize,),
+        textAlign: isAlignCenter?TextAlign.center:TextAlign.left,
     );
   }
 }
