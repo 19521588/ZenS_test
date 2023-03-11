@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/joke_screen.dart';
+import 'package:mobile_flutter/voted_store.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const JokeScreen(),
+      home:  JokeScreen(storage: VotedStorage(),),
     );
   }
 }

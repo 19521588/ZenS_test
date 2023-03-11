@@ -1,21 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mobile_flutter/model.dart';
+import 'package:mobile_flutter/voted_store.dart';
+
 import './color.dart';
 
 class JokeScreen extends StatefulWidget {
-  const JokeScreen({super.key});
+  const JokeScreen({super.key, required this.storage});
+
+  final VotedStorage storage;
 
   @override
   State<JokeScreen> createState() => _JokeScreenState();
 }
 
 class _JokeScreenState extends State<JokeScreen> {
-  List<String> jokes = [
-    "A child asked his father, \"How were people born?\" So his father said, \"Adam and Eve made babies, then their babies became adults and made babies, and so on.\" The child then went to his mother, asked her the same question and she told him, \"We were monkeys then we evolved to become like we are now.\" The child ran back to his father and said, \"You lied to me!\" His father replied, \"No, your mom was talking about her side of the family.\"",
-    "Teacher: \"Kids,what does the chicken give you?\" Student: \"Meat!\" Teacher: \"Very good! Now what does the pig give you?\" Student: \"Bacon!\" Teacher: \"Great! And what does the fat cow give you?\" Student: \"Homework!\"",
-    "The teacher asked Jimmy, \"Why is your cat at school today Jimmy?\" Jimmy replied crying, \"Because I heard my daddy tell my mommy, 'I am going to eat that pussy once Jimmy leaves for school today!'\"",
-    "A housewife, an accountant and a lawyer were asked \"How much is 2+2?\" The housewife replies: \"Four!\". The accountant says: \"I think it's either 3 or 4. Let me run those figures through my spreadsheet one more time.\" The lawyer pulls the drapes, dims the lights and asks in a hushed voice, \"How much do you want it to be?\""
-  ];
   int index = 0;
+
+  List<String> jokes = [];
+
+  List<JokeDataModel> item=[];
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the readJson method when the app starts
+    widget.storage.readFile().then((value) {
+      setState(() {
+        index = value.length;
+        jokes = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,15 +104,31 @@ class _JokeScreenState extends State<JokeScreen> {
                       ),
                     ],
                   )),
-              Container(
-                padding: EdgeInsets.all(height * 0.04),
-                child: textStyle(
-                    index < jokes.length 
-                        ? jokes[index]
-                        : "That's all the jokes for today! Come back another day!",
-                    14,
-                    AppColors.primaryGray,
-                    false),
+              FutureBuilder(
+                future: ReadJsonData(),
+                builder: ((context, data) {
+                  if (data.hasError) {
+                    return Center(child: Text("${data.error}"));
+                  } else {
+                    if (data.hasData) {
+                       item = data.data as List<JokeDataModel>;
+                      return Container(
+                        padding: EdgeInsets.all(height * 0.04),
+                        child: textStyle(
+                            index < item.length
+                                ? item[index].joke.toString()
+                                : "That's all the jokes for today! Come back another day!",
+                            14,
+                            AppColors.primaryGray,
+                            false),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }
+                }),
               ),
               Expanded(
                   child: Align(
@@ -172,8 +206,11 @@ class _JokeScreenState extends State<JokeScreen> {
       ),
       onPressed: () {
         setState(() {
-          if (index < jokes.length) {
+          if (index < item.length) {
             ++index;
+            isFunny ? jokes.add("Funny") : jokes.add("notFunny");
+            widget.storage.writeFile(jokes);
+          
           }
         });
       },
@@ -188,5 +225,15 @@ class _JokeScreenState extends State<JokeScreen> {
           color: color, fontSize: fontSize, fontWeight: FontWeight.w400),
       textAlign: isAlignCenter ? TextAlign.center : TextAlign.left,
     );
+  }
+
+  Future<List<JokeDataModel>> ReadJsonData() async {
+    //read json file
+    final jsondata = await rootBundle.loadString('assets/json/jokes.json');
+    //decode json data as list
+    final list = json.decode(jsondata) as List<dynamic>;
+
+    //map json and initialize using DataModel
+    return list.map((e) => JokeDataModel.fromJson(e)).toList();
   }
 }
