@@ -21,7 +21,7 @@ class _JokeScreenState extends State<JokeScreen> {
 
   List<String> jokes = [];
 
-  List<JokeDataModel> item=[];
+  List<JokeDataModel> item = [];
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _JokeScreenState extends State<JokeScreen> {
         elevation: 0,
         backgroundColor: AppColors.primaryWhite,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -72,7 +72,8 @@ class _JokeScreenState extends State<JokeScreen> {
                   padding: EdgeInsets.only(left: width * 0.025),
                   child: const CircleAvatar(
                     radius: 20,
-                    backgroundImage: AssetImage('assets/images/avt.jpg'),
+                    backgroundImage: AssetImage('assets/images/avt.png'),
+                    foregroundColor: AppColors.primaryWhite,
                   ),
                 ),
               ],
@@ -111,15 +112,15 @@ class _JokeScreenState extends State<JokeScreen> {
                     return Center(child: Text("${data.error}"));
                   } else {
                     if (data.hasData) {
-                       item = data.data as List<JokeDataModel>;
+                      item = data.data as List<JokeDataModel>;
                       return Container(
                         padding: EdgeInsets.all(height * 0.04),
                         child: textStyle(
                             index < item.length
                                 ? item[index].joke.toString()
                                 : "That's all the jokes for today! Come back another day!",
-                            14,
-                            AppColors.primaryGray,
+                            16,
+                            AppColors.primaryBlack1,
                             false),
                       );
                     } else {
@@ -137,30 +138,19 @@ class _JokeScreenState extends State<JokeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      width: width * 0.55,
-                      padding: EdgeInsets.only(bottom: height * 0.04),
-                      decoration: const BoxDecoration(
-                          border: Border(
-                        top: BorderSide(
-                          color: AppColors.primaryGray2,
-                          width: 0.75,
-                        ),
-                      )),
-                    ),
-                    Container(
                       padding: EdgeInsets.only(bottom: height * 0.06),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          button('This is Funny!', true, width, height),
-                          button('This is not Funny.', false, width, height)
+                          button('This is Funny!', true),
+                          button('This is not funny.', false)
                         ],
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: height * 0.02, horizontal: height * 0.03),
+                        padding: EdgeInsets.only(
+                            top: height * 0.01),
                         decoration: const BoxDecoration(
                             border: Border.symmetric(
                           horizontal: BorderSide(
@@ -172,13 +162,13 @@ class _JokeScreenState extends State<JokeScreen> {
                           children: [
                             textStyle(
                                 "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.",
-                                14,
+                                12,
                                 AppColors.primaryGray,
                                 true),
                             Container(
                               padding: EdgeInsets.only(top: height * 0.01),
                               child: textStyle('Copyright 2021 HLS', 14,
-                                  AppColors.darkSilver, false),
+                                  AppColors.primaryBlack1, false),
                             ),
                           ],
                         )),
@@ -192,13 +182,13 @@ class _JokeScreenState extends State<JokeScreen> {
     );
   }
 
-  Widget button(content, isFunny, width, height) {
+  Widget button(content, isFunny) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0),
         ),
-        minimumSize: Size(width * 0.35, height * 0.07),
+        minimumSize: const Size(140, 40),
         primary: isFunny
             ? AppColors.primaryBlue
             : AppColors.primaryGreen, // background
@@ -210,7 +200,6 @@ class _JokeScreenState extends State<JokeScreen> {
             ++index;
             isFunny ? jokes.add("Funny") : jokes.add("notFunny");
             widget.storage.writeFile(jokes);
-          
           }
         });
       },
