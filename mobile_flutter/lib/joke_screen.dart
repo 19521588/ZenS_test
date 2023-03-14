@@ -114,12 +114,12 @@ class _JokeScreenState extends State<JokeScreen> {
                     if (data.hasData) {
                       item = data.data as List<JokeDataModel>;
                       return Container(
-                        padding: EdgeInsets.all(height * 0.04),
+                        padding: EdgeInsets.all(height * 0.02),
                         child: textStyle(
                             index < item.length
                                 ? item[index].joke.toString()
                                 : "That's all the jokes for today! Come back another day!",
-                            16,
+                            15,
                             AppColors.primaryBlack1,
                             false),
                       );
