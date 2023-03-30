@@ -163,11 +163,7 @@ class _JokeScreenState extends State<JokeScreen> {
                     ),
                     Container(
                         padding: EdgeInsets.symmetric(
-<<<<<<< Updated upstream
-                            vertical: height * 0.02, horizontal: height * 0.03),
-=======
                             vertical: height * 0.01),
->>>>>>> Stashed changes
                         decoration: const BoxDecoration(
                             border: Border.symmetric(
                           horizontal: BorderSide(
@@ -177,13 +173,6 @@ class _JokeScreenState extends State<JokeScreen> {
                         )),
                         child: Column(
                           children: [
-<<<<<<< Updated upstream
-                            textStyle(
-                                "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.",
-                                14,
-                                AppColors.primaryGray,
-                                true),
-=======
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 22),
                               child: textStyle(
@@ -192,7 +181,6 @@ class _JokeScreenState extends State<JokeScreen> {
                                   AppColors.primaryGray3,
                                   true),
                             ),
->>>>>>> Stashed changes
                             Container(
                               padding: EdgeInsets.only(top: height * 0.01),
                               child: textStyle('Copyright 2021 HLS', 14,
