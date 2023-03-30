@@ -88,12 +88,15 @@ class _JokeScreenState extends State<JokeScreen> {
               Container(
                   padding: EdgeInsets.symmetric(vertical: height * 0.05),
                   width: width,
-                  color: Colors.green,
+                  color: AppColors.primaryGreen,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      textStyle('A joke a day keeps the doctor away', 20,
-                          AppColors.primaryWhite, false),
+                      Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: textStyle('A joke a day keeps the doctor away', 20,
+                            AppColors.primaryWhite, false),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: height * 0.04),
                         child: textStyle(
@@ -160,7 +163,11 @@ class _JokeScreenState extends State<JokeScreen> {
                     ),
                     Container(
                         padding: EdgeInsets.symmetric(
+<<<<<<< Updated upstream
                             vertical: height * 0.02, horizontal: height * 0.03),
+=======
+                            vertical: height * 0.01),
+>>>>>>> Stashed changes
                         decoration: const BoxDecoration(
                             border: Border.symmetric(
                           horizontal: BorderSide(
@@ -170,11 +177,22 @@ class _JokeScreenState extends State<JokeScreen> {
                         )),
                         child: Column(
                           children: [
+<<<<<<< Updated upstream
                             textStyle(
                                 "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.",
                                 14,
                                 AppColors.primaryGray,
                                 true),
+=======
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 22),
+                              child: textStyle(
+                                  "This appis created as part of HLsolutions program. The materials contained on this website are provided for general information only and do not constitute any form of advice. HLS assumes no responsibility for the accuracy of any particular statement and accepts no liability for any loss or damage which may arise \nfrom reliance on the information contained on this site.",
+                                  12,
+                                  AppColors.primaryGray3,
+                                  true),
+                            ),
+>>>>>>> Stashed changes
                             Container(
                               padding: EdgeInsets.only(top: height * 0.01),
                               child: textStyle('Copyright 2021 HLS', 14,
@@ -214,7 +232,7 @@ class _JokeScreenState extends State<JokeScreen> {
           }
         });
       },
-      child: Text(content, style: TextStyle(fontSize: 14)),
+      child: Text(content, style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400)),
     );
   }
 
